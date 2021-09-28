@@ -6,26 +6,20 @@ import { Dropdown } from 'react-bootstrap';
 
 
 const Products = ({products,filters}) => {
-    const [filterdata,setFiltersdata] = useState([])
-    useEffect(() => {
-       // setFiltersdata(products.books)
-        console.log("filteruseeffect",filterdata)
-    }, [filterdata])
+    const [filterword,setFiltersword] = useState("")
+    const [filterdata,setFilterData] = useState([])
+    
     const handleFilter=(e)=>{
            const searchworld= e.target.value;
-           const newFilter=products.books.filter((value)=>{
-               return value.name.toLowerCase().includes(searchworld.toLowerCase())
-           })
-          if(searchworld === ""){
-            setFiltersdata([])
-
-          }else{
-            setFiltersdata(newFilter)
-
-          }
-
+           setFiltersword(searchworld)
     }
-    console.log(products)
+    
+    useEffect(()=>{
+        
+    },[])
+     
+    
+    console.log(filterword)
     return(
         <div className="container-fluid pb-3">
             <div className="d-flex align-items-center mb-3">
@@ -45,7 +39,14 @@ const Products = ({products,filters}) => {
                 </Dropdown>
              </div>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                  {filterdata.length!==0 && filterdata.map((book,key)=>{
+            {products.books && products.books.filter((book)=>{
+                  
+                  if(filterword == ""){
+                     return book
+                  }else if (book.name.toLowerCase().includes(filterword.toLowerCase())){
+                    return book
+                  }
+              }).map((book,key)=>{
                     return(
                     
                         <div className="col" key={key}>
