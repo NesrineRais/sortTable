@@ -4,7 +4,6 @@ import Products from "../components/Products"
 
 const Frontend = (props) => {
     const [allproducts, setAllProducts] = useState([]);
-    const [filterproducts, setFilterProducts] = useState([]);
     const [filters,setFilters] = useState({s:''})
 
     useEffect(() => {
@@ -18,28 +17,17 @@ const Frontend = (props) => {
         (
             async()=>{
                 const response = await fetch('http://localhost:9100/api/v1/books/all');
-                console.log("response frn",response)
+               // console.log("response frn",response)
                 const content = await response.json();
-                console.log("content frn",content)
+               // console.log("content frn",content)
                 setAllProducts(content)
-                setFilterProducts(content)
             }
 
         )()
 
-    }, []);
-    useEffect(() => {
-        let allprods= allproducts.books
-        let products = allprods.filter(p=>p.name.toLowerCase().indexOf(filters.s.toLowerCase())>=0 || p.description.toLowerCase().indexOf(filters.s.toLowerCase())>=0 );
-
-         console.log(products)
-         setFilterProducts(products)
- 
- 
- 
-     },[filters]);
+    }, [props]);
     return(
-        <Products products={filterproducts} filters={filters} setFilters={setFilters}/>
+        <Products products={allproducts} filters="placeholder" />
     )
 }
 

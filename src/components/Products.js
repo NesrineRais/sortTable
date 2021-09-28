@@ -1,23 +1,37 @@
-import React from "react"
+import React,{ useState,useEffect } from "react"
 import { config } from "../config";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown } from 'react-bootstrap';
 
 
 
-const Products = (props) => {
-    const search=(s)=>{
-            props.setFilters({
-                s
-            })
+const Products = ({products,filters}) => {
+    const [filterdata,setFiltersdata] = useState([])
+    useEffect(() => {
+       // setFiltersdata(products.books)
+        console.log("filteruseeffect",filterdata)
+    }, [filterdata])
+    const handleFilter=(e)=>{
+           const searchworld= e.target.value;
+           const newFilter=products.books.filter((value)=>{
+               return value.name.toLowerCase().includes(searchworld.toLowerCase())
+           })
+          if(searchworld === ""){
+            setFiltersdata([])
+
+          }else{
+            setFiltersdata(newFilter)
+
+          }
+
     }
-    //console.log(props.products)
+    console.log(products)
     return(
-        <div class="container-fluid pb-3">
+        <div className="container-fluid pb-3">
             <div className="d-flex align-items-center mb-3">
                 <form className="w-100 me-3">
-                    <input type="search" className="form-control" placeholder="Search..." aria-label="Search"
-                    onChange={e=>search(e.target.value)} />
+                    <input type="search" className="form-control" placeholder={filters} aria-label="Search"
+                  onChange={handleFilter}  />
                 </form>
                 <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -31,10 +45,10 @@ const Products = (props) => {
                 </Dropdown>
              </div>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {props.products.books!==undefined && props.products.books.map((book,key)=>{
+                  {filterdata.length!==0 && filterdata.map((book,key)=>{
                     return(
                     
-                        <div className="col" id={key}>
+                        <div className="col" key={key}>
                             <div className="card shadow-sm">
                                 <img className="bd-placeholder-img card-img-top" width="100%" height="225" src={config.pict_url+book.photo} />
                                 <div className="card-body">
@@ -48,7 +62,8 @@ const Products = (props) => {
                             </div>
                         </div>       
                     
-                )})}
+                )})}  
+                
         </div>
       </div>
        

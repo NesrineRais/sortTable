@@ -7,7 +7,6 @@ const Header=()=>{
             <header className="d-flex justify-content-center py-3">
                 <ul className="nav nav-pills">
                     <li className="nav-item"><NavLink to="/frontend" className="nav-link" aria-current="page">Frontend</NavLink></li>
-                    <li className="nav-item"><NavLink to="/backend" className="nav-link">Backend</NavLink></li>
                     
                 </ul>
             </header>
